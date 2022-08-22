@@ -1,0 +1,115 @@
+<link rel="stylesheet" type="text/css" href="Template.css">
+<div id="template">
+Блок сохранения данных
+<form action="Data_add.php" method="POST">
+
+ФИО: <div id="text1" class="tim_bold"></div>
+Должность:<div id="text2" class="tim_bold"></div><br>
+<div id="text3"></div><br>
+<div id="text4"></div><br>
+
+<input type="radio" id="func_ch1" name="func_ch" value="email">
+    <label for="func_ch1">Добавления ФИО</label><br>
+<input type="radio" id="func_ch2" name="func_ch" value="phone">
+    <label for="func_ch2">Добавления должности</label><br>
+<input type="radio" id="func_ch3" name="func_ch" value="mail">
+    <label for="func_ch3">Добавления фото</label>
+
+<input type="hidden" id="hid1" name="d1">
+<input type="hidden" id="hid2" name="d2">
+<input type="hidden" id="hid3" name="d3">
+<input type="hidden" id="hid4" name="d4">
+
+<input type="hidden" id="hid5" name="d5">
+<input type="hidden" id="hid6" name="d6">
+<input type="hidden" id="hid7" name="d7">
+<input type="hidden" id="hid8" name="d8">
+
+<input type="hidden" id="hid9" name="d9">
+<input type="hidden" id="hid10" name="d10">
+<input type="hidden" id="hid11" name="d11">
+<input type="hidden" id="hid12" name="d12">
+
+<input type="submit" value="Добавить данные" class="temp_but">
+</form>
+</div>
+<script>
+var buttons = document.querySelectorAll('*');
+var text1 = document.querySelector('#text1');
+var text2 = document.querySelector('#text2');
+var text3 = document.querySelector('#text3');
+var text4 = document.querySelector('#text4');
+var i=1;
+var hid1 = document.querySelector('#hid1');
+var hid2 = document.querySelector('#hid2');
+var hid3 = document.querySelector('#hid3');
+var hid4 = document.querySelector('#hid4');
+
+var hid5 = document.querySelector('#hid5');
+var hid6 = document.querySelector('#hid6');
+var hid7 = document.querySelector('#hid7');
+var hid8 = document.querySelector('#hid8');
+
+var hid9 = document.querySelector('#hid9');
+var hid10 = document.querySelector('#hid10');
+var hid11 = document.querySelector('#hid11');
+var hid12 = document.querySelector('#hid12');
+
+var c = document.getElementsByName('func_ch');
+var btm = document.getElementsByName('tt');
+Array.from(buttons).forEach(function(button){
+    button.addEventListener('dblclick', function(e) {
+    	if (c[0].checked){
+			/*text1.innerHTML=e.target.id;
+			text2.innerHTML=e.target.tagName;
+			text3.innerHTML=e.target.className;*/
+			text1.innerHTML=e.target.innerText;	 
+		
+			hid1.value=e.target.id;
+			hid2.value=e.target.tagName;
+			hid3.value=e.target.className;
+			hid4.value=e.target.innerText;
+
+		console.log(e.target); }
+		  
+		if (c[1].checked){
+			/*text1.innerHTML=e.target.id;
+			text2.innerHTML=e.target.tagName;
+			text3.innerHTML=e.target.className;*/
+			text2.innerHTML=e.target.innerText;	 
+		
+			hid5.value=e.target.id;
+			hid6.value=e.target.tagName;
+			hid7.value=e.target.className;
+			hid8.value=e.target.innerText;
+		
+		console.log(e.target); }
+				    })
+});	
+	
+	Array.from(buttons).forEach(function(button){
+    button.addEventListener('click', function(e) {		
+		if (c[2].checked){
+		
+			/*text1.innerHTML=e.target.id;
+			text2.innerHTML=e.target.tagName;
+			text3.innerHTML=e.target.className;*/
+				 
+		
+			hid9.value=e.target.id;
+			hid10.value=e.target.tagName;
+			hid11.value=e.target.className;
+			hid12.value=e.target.outerHTML;
+			
+		
+		console.log(e.target); 
+		setTimeout("c[0].checked=true;text3.innerHTML='Фотография выбрана'" , 5000);
+		
+			}		
+						    })
+});	
+
+	
+</script>
+
+

@@ -1,0 +1,64 @@
+<link rel="stylesheet" type="text/css" href="Template.css">
+<div id="template">
+Блок сохранения данных
+<form action="Data_add.php" method="POST">
+
+<div id="text1"></div>
+<div id="text2"></div><br>
+<div id="text3"></div><br>
+<div id="text4"></div><br>
+<input type="radio" id="func_ch1" name="func_ch" value="email">
+    <label for="func_ch1">Добавления ФИО</label><br>
+<input type="radio" id="func_ch2" name="func_ch" value="phone">
+    <label for="func_ch2">Добавления должности</label><br>
+<input type="radio" id="func_ch3" name="func_ch" value="mail">
+    <label for="func_ch3">Добавления фото</label>
+
+<input type="hidden" id="hid1" name="d1">
+<input type="hidden" id="hid2" name="d2">
+<input type="hidden" id="hid3" name="d3">
+<input type="hidden" id="hid4" name="d4">
+
+<input type="submit" value="Добавить данные">
+</form>
+</div>
+<script>
+var buttons = document.querySelectorAll('*');
+var text1 = document.querySelector('#text1');
+var text2 = document.querySelector('#text2');
+var text3 = document.querySelector('#text3');
+var text4 = document.querySelector('#text4');
+
+var hid1 = document.querySelector('#hid1');
+var hid2 = document.querySelector('#hid2');
+var hid3 = document.querySelector('#hid3');
+var hid4 = document.querySelector('#hid4');
+
+Array.from(buttons).forEach(function(button){
+    button.addEventListener('dblclick', function(e) {
+    	
+		text1.innerHTML=e.target.id;
+        text2.innerHTML=e.target.tagName;
+		text3.innerHTML=e.target.className;
+		text4.innerHTML=e.target.innerHTML;	 
+		
+		hid1.value=e.target.id;
+		hid2.value=e.target.tagName;
+		hid3.value=e.target.className;
+		hid4.value=e.target.innerHTML;
+		
+		   
+function RAZ911() {
+  var c = document.getElementsByName('shest10');
+  if (!c[1].checked) c[1].checked = true;  // поставить checked на второй input, если он не установлен
+}
+RAZ911();
+
+		console.log(e.target); 
+		  
+			    })
+});
+
+</script>
+
+

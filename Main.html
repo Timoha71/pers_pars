@@ -1,0 +1,50 @@
+﻿<!doctype html>
+<html>
+<head>
+<title>Admin_mode</title>
+<link href="ComboBox.css" rel="stylesheet" type="text/css">
+<link href="timoha.css" rel="stylesheet" type="text/css">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<h1 >Web система парсинга</h1>
+</head>
+
+<body>
+<div class="Print" id="Print"></div>
+  
+<form action="SAVE2.php" method="POST">
+<input type="text" name="url" value="введите url">
+<input type="submit" value=""></input>
+</form>
+
+<div id="fixed_table">
+<span id="s1" class="text block">one</span><br>
+<span id="s2" class="text block">two</span><br>
+<span id="s2" class="text block">three</span><br>
+<div id="test1"></div>
+<div id="text1"></div><br>
+<div id="text1"></div><br>
+<div id="text1"></div><br>
+</div>
+
+<script>
+var buttons = document.querySelectorAll('*');
+var text1 = document.querySelector('#text1');
+var text2 = document.querySelector('#text2');
+var text3 = document.querySelector('#text3');
+
+Array.from(buttons).forEach(function(button){
+    button.addEventListener('click', function(e) {
+    		test1.innerHTML=e.target.id;
+        test2.innerHTML=e.target.tagName;
+		
+    		console.log(e.target);   
+			    })
+});
+
+</script>
+</div>
+</body>
+
+
+
+</html>

@@ -1,0 +1,91 @@
+﻿<!doctype html>
+<html>
+<head>
+<link href="Main_elements.css" rel="stylesheet" type="text/css">
+<meta charset="utf-8">
+<title>Мониторинг web-ресурсов</title>
+</head>
+<body>
+
+<div id="upper">
+<div id="upper_img"><img src="/дип/logo.png"></div>
+<div id="upper_text">Программное средство мониторинга изменений содержимого информационных web-ресурсов
+</div>
+<div id="upper_time"><script type="text/javascript">
+Data = new Date();
+Year = Data.getFullYear();
+Month = Data.getMonth();
+Day = Data.getDate();
+switch (Month)
+{
+  case 0: fMonth="января"; break;
+  case 1: fMonth="февраля"; break;
+  case 2: fMonth="марта"; break;
+  case 3: fMonth="апреля"; break;
+  case 4: fMonth="мая"; break;
+  case 5: fMonth="июня"; break;
+  case 6: fMonth="июля"; break;
+  case 7: fMonth="августа"; break;
+  case 8: fMonth="сентября"; break;
+  case 9: fMonth="октября"; break;
+  case 10: fMonth="ноября"; break;
+  case 11: fMonth="декабря"; break;
+}
+ 
+// Вывод
+document.write(Day+" "+fMonth+" "+Year+" года");
+</script>
+</div>
+<div id="upper_color">
+
+</div>
+</div>
+
+<div class="menu">
+<ul>
+    <li><a href="Main_page.html">Главная</a></li>
+    <li><a href="dictionary.html">Справочник</a></li>
+  <li class="selected"><a href="Add_pers.html">Добавление данных</a></li>
+    <li><a href="Data_update.html">Обновление данных</a></li>
+   
+  </ul>
+</div>
+<div id="main">
+
+
+<p class="main_text"><br>Для добавления в информационную систему нового должностного лица
+необходимо ввести полный URL-адрес страницы его официального сайта </p><br>
+<div class="d7">
+<form action="SAVE2.php" method="POST">
+  <input type="text" name="url" placeholder="Введите url-адрес..." required>
+  <button type="submit"></button>
+</form>
+</div> 
+
+
+<br>
+<p class="main_text">Количество учитываемых должностных лиц на данный момент:  
+<?php
+
+$dbconn = pg_connect("host=localhost dbname=tt user=postgres password=1")
+    or die('Could not connect: ' . pg_last_error());
+
+
+$query = 'SELECT count(*) as count FROM person';
+$result = pg_query($query) or die('ошибка запроса: ' . pg_last_error());
+while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
+echo $line['count'];
+}
+
+?> </p>
+
+
+<div class="main_text">Порядок учета должностных лиц устанавливается регламентом предоставления информации 
+плана-графика информационного обмена </div>
+<br>
+
+
+</div>
+<div id="footer">
+<div class="mid_text">Академия ФСО Росcии 2020</div>
+</div>

@@ -1,0 +1,208 @@
+<!doctype html>
+<html>
+<head>
+<link href="Main_elements.css" rel="stylesheet" type="text/css">
+<meta charset="utf-8">
+<title>Мониторинг web-ресурсов</title>
+</head>
+<body >
+
+
+
+
+
+<div id="upper">
+<div id="upper_img"><img src="/дип/logo.png"></div>
+<div id="upper_text">Программное средство мониторинга изменений содержимого информационных web-ресурсов
+</div>
+<div id="upper_time"><script type="text/javascript">
+Data = new Date();
+Year = Data.getFullYear();
+Month = Data.getMonth();
+Day = Data.getDate();
+switch (Month)
+{
+  case 0: fMonth="января"; break;
+  case 1: fMonth="февраля"; break;
+  case 2: fMonth="марта"; break;
+  case 3: fMonth="апреля"; break;
+  case 4: fMonth="мая"; break;
+  case 5: fMonth="июня"; break;
+  case 6: fMonth="июля"; break;
+  case 7: fMonth="августа"; break;
+  case 8: fMonth="сентября"; break;
+  case 9: fMonth="октября"; break;
+  case 10: fMonth="ноября"; break;
+  case 11: fMonth="декабря"; break;
+}
+ 
+// Вывод
+document.write(Day+" "+fMonth+" "+Year+" года");
+</script>
+</div>
+<div id="upper_color">
+</div>
+</div>
+
+<div class="menu">
+<ul>
+    <li><a href="Main_page.html">Главная</a></li>
+    <li><a href="dictionary.html">Справочник</a></li>
+  <li><a href="Add_pers.html">Добавление данных</a></li>
+    <li class="selected" ><a href="Data_update.html">Обновление данных</a></li>
+   
+  </ul>
+
+</div>
+
+<div id="main">
+<p class="main_text"> </p>
+  
+
+
+<br>
+
+
+ <?php
+$dbconn = pg_connect("host=localhost dbname=tt user=postgres password=1")
+    or die('Ошибка подключения: ' . pg_last_error());
+date_default_timezone_set('Europe/Moscow');
+$query = 'SELECT * FROM person;';
+$result = pg_query($query) or die('Request mistake(ошибка запроса): ' . pg_last_error());
+$i=0;
+echo "<table class='table3_css' id='t1'><caption class='capt'>Данные в системе</caption><tr ><th class='th_css'>ФИО   </th><th class='th_css'>Должность</th></tr>";
+while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) 
+{
+
+echo '<tr><td class="td2_css" id="f'.$i.'">'.$line['fio'].'</td><td class="td2_css" id="r'.$i.'">'.$line['rank_name'].'</td></tr>';
+$i++;
+}
+
+echo "</table>";
+?> 
+
+
+ 
+ 
+<?php
+include('simple_html_dom.php');
+$dbconn = pg_connect("host=localhost dbname=tt user=postgres password=1")
+    or die('Ошибка подключения: ' . pg_last_error());
+	
+date_default_timezone_set('Europe/Moscow');
+$html = new simple_html_dom();
+
+echo "<table class='table2_css' id='t2'><caption class='capt'>Данные на web-ресурсах</caption> <tr><th class='th_css'>ФИО   </th><th class='th_css'>Должность</th></tr>";
+
+
+$query = 'SELECT * FROM person;';
+$result = pg_query($query) or die('Request mistake(ошибка запроса): ' . pg_last_error());
+$i=0;
+$j=0;
+while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) 
+{
+$url=$line['link'];
+
+$html = file_get_html($url);
+
+if ($line['fio_class']=='')
+{$a1 = $line['fio_tag'];}
+else {$a1 = $line['fio_tag']."[class=".$line['fio_class']."]";}
+
+if ($line['rank_class']=='')
+{$b1 = $line['rank_tag'];}
+else {$b1 = $line['rank_tag']."[class=".$line['rank_class']."]";}
+
+foreach($html->find($a1) as $text) {
+$a = $text->plaintext;
+echo '<tr><td class="td2_css" id="ff'.$i.'">'.$a.'</td>';
+$i++;
+}
+foreach($html->find($b1) as $text) {
+$b = $text->plaintext;
+echo '<td class="td2_css" id="rr'.$j.'">'.$b.'</td></tr>';
+$j++;
+}
+}
+echo '</table>';
+pg_free_result($result);
+pg_close($dbconn);
+?>
+
+
+
+ 
+<div  id="Print1"></div>
+
+</div>
+<form action="accept.php" >
+<button id="accept" type="submit">Сохранить изменения</button>
+</form>
+<script type="text/javascript">
+
+var table=document.getElementById('t1');
+var a = table.rows.length;
+var t = 0;
+var c = 0;
+
+for (var i=0; i<=(a-2); i++)
+{
+var f = "f"+i;
+var ff = "ff"+i;
+var r = "r"+i;
+var rr = "rr"+i;
+
+
+var y1=document.getElementById((f).toString()).innerText;
+var y2=document.getElementById((ff).toString()).innerText;
+var y3=document.getElementById((r).toString()).innerText;
+var y4=document.getElementById((rr).toString()).innerText;
+
+if (y1!=y2 || y3!=y4)
+{
+c++;
+document.getElementById((f).toString()).style.background="#71BC78";
+document.getElementById((ff).toString()).style.background="#71BC78";
+document.getElementById((r).toString()).style.background="#71BC78";
+document.getElementById((rr).toString()).style.background="#71BC78";
+
+}
+
+else {}
+}
+
+if (c==0) {alert('Изменения не найдены');
+document.getElementById("accept").hidden=true;
+}
+else {
+if (c==1){alert('Произошло одно изменение');
+document.getElementById("accept").hidden=false;
+}
+else {
+alert('Произошло '+c+' изменений');
+document.getElementById("accept").hidden=false;}}
+</script>
+
+
+<div class="upper">
+<a>^</a>
+<script>
+var btn = document.querySelector('.upper')
+function up() {
+  if (window.pageYOffset > 20) {
+    btn.style.opacity = '1'
+  } else { btn.style.opacity = '0' }
+}
+btn.onclick = function () {
+	window.scrollTo(0,0)
+}
+window.onscroll = up
+</script>
+</div>
+
+
+<div id="footer">
+<div class="mid_text">Академия ФСО Росcии 2020</div>
+</div>
+</body>
+</html>

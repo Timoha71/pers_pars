@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+<head>
+<link href="Main_elements.css" rel="stylesheet" type="text/css">
+<meta charset="utf-8">
+<title>Мониторинг web-ресурсов</title>
+</head>
+<body >
+
+<div id="upper">
+<div id="upper_img"><img src="/дип/logo.png"></div>
+<div id="upper_text">Программное средство мониторинга изменений содержимого информационных web-ресурсов
+</div>
+<div id="upper_time"><script type="text/javascript">
+Data = new Date();
+Year = Data.getFullYear();
+Month = Data.getMonth();
+Day = Data.getDate();
+switch (Month)
+{
+  case 0: fMonth="января"; break;
+  case 1: fMonth="февраля"; break;
+  case 2: fMonth="марта"; break;
+  case 3: fMonth="апреля"; break;
+  case 4: fMonth="мая"; break;
+  case 5: fMonth="июня"; break;
+  case 6: fMonth="июля"; break;
+  case 7: fMonth="августа"; break;
+  case 8: fMonth="сентября"; break;
+  case 9: fMonth="октября"; break;
+  case 10: fMonth="ноября"; break;
+  case 11: fMonth="декабря"; break;
+}
+ 
+// Вывод
+document.write(Day+" "+fMonth+" "+Year+" года");
+</script>
+</div>
+<div id="upper_color">
+
+</div>
+</div>
+
+<div class="menu">
+<ul>
+    <li><a href="Main_page.html">Главная</a></li>
+    <li class="selected"><a href="Dictionary.html">Справочник</a></li>
+  <li><a href="Add_pers.html">Добавление данных</a></li>
+    <li><a href="Data_update.html">Обновление данных</a></li>
+   
+  </ul>
+</div>
+
+<div id="main">
+
+
+<p class="main_text"> </p>
+
+<?php
+include('simple_html_dom.php');
+$html = new simple_html_dom();
+$dbconn = pg_connect("host=localhost dbname=tt user=postgres password=1")
+    or die('Could not connect: ' . pg_last_error());
+$query = 'SELECT *  FROM person';
+$result = pg_query($query) or die('ошибка запроса: ' . pg_last_error());
+echo '<table class="table_css">';
+while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
+$html= str_get_html($line["img"]);
+foreach($html->find('img') as $pic){
+
+$pic1=$pic->src;}
+echo '<tr class="tr_css"><td><b><a class="no_decor" href="'.$line["link"].'">'.$line["fio"].'</a></b></td>
+<td>'.$line["rank_name"].'</td><td>
+<img class="td_pic" src="'.$pic1.'"/></td></tr>';
+}
+echo '</table>';
+?>
+<p class="main_text"> <p></p>
+<p class="main_text"> </p>
+
+
+<div class="funWind2">
+<div class="Print" id="Print"></div>
+</div>
+
+</div>
+<div class="upper">
+<a>^</a>
+<script>
+var btn = document.querySelector('.upper')
+function up() {
+  if (window.pageYOffset > 20) {
+    btn.style.opacity = '1'
+  } else { btn.style.opacity = '0' }
+}
+btn.onclick = function () {
+	window.scrollTo(0,0)
+}
+window.onscroll = up
+</script>
+</div>
+
+
+<form action="xml_create.php" >
+ 
+  <button id="xml_create" type="submit">Импорт данных в XML</button>
+</form>
+
+<div id="footer">
+<div class="mid_text">Академия ФСО Росcии 2020</div>
+</div>
+</body>
+</html>
